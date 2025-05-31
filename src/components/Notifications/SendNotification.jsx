@@ -19,7 +19,7 @@ const SendNotification = () => {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:5000/api/employee', {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/employee`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -63,7 +63,7 @@ const SendNotification = () => {
         recipientIds
       };
 
-      const res = await axios.post('http://localhost:5000/api/notifications', payload, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/notifications`, payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

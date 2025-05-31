@@ -13,7 +13,7 @@ const LeaveDetail = () => {
         const fetchLeave = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5000/api/leave/detail/${id}`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/leave/detail/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
@@ -37,8 +37,8 @@ const LeaveDetail = () => {
 
     const changestatus = async (id, status) => {
   try {
-    const response = await axios.put(
-      `http://localhost:5000/api/leave/${id}`,
+      const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/api/leave/${id}`,
       { status }, // <-- Send status in an object
       {
         headers: {

@@ -19,7 +19,7 @@ const AdminSettings = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/users/me', {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -59,7 +59,7 @@ const AdminSettings = () => {
 
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/users/info',
+        `${import.meta.env.VITE_API_BASE_URL}/api/users/info`,
         formData,
         {
           headers: {

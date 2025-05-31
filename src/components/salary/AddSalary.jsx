@@ -47,7 +47,7 @@ const AddSalary = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/salary/add`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/salary/add`,
         salaryData,
         {
           headers: {

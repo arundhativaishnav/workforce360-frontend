@@ -21,7 +21,7 @@ const EditDepartment = () => {
       e.preventDefault();
       try {
         const response = await axios.put(
-          `http://localhost:5000/api/department/${id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/department/${id}`,
           department,
           {
             headers: {

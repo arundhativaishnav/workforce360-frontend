@@ -16,33 +16,33 @@ const AddDepartment = () => {
     setDepartment({ ...department, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/api/department/add',
-        department,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/api/department/add`,
+            department,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            }
+          );
 
-      if (response.data.success) {
-        toast.success(response.data.message, {
-            position: "top-right" 
-        });
-        navigate('/AdminDashboard/departments');
-      }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message, {
-          position: "top-right",
-        });
-      }
-    }
-  };
+          if (response.data.success) {
+            toast.success(response.data.message, {
+                position: "top-right" 
+            });
+            navigate('/AdminDashboard/departments');
+          }
+        } catch (error) {
+          if (error.response) {
+            toast.error(error.response.data.message, {
+              position: "top-right",
+            });
+          }
+        }
+      };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-xl shadow-lg">

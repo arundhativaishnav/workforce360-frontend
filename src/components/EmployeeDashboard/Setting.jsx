@@ -20,7 +20,7 @@ const Setting = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/settings', {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/settings`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -65,7 +65,7 @@ const Setting = () => {
 
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/settings/change-profile',
+        `${import.meta.env.VITE_API_BASE_URL}/api/settings/change-profile`,
         formDataObj,
         {
           headers: {

@@ -8,29 +8,29 @@ const AdminAttendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [filterDate, setFilterDate] = useState("");
 
-  const fetchAttendance = async () => {
-  try {
-    const endpoint = filterDate
-      ? "http://localhost:5000/api/attendance/filter"
-      : "http://localhost:5000/api/attendance/all";
+    const fetchAttendance = async () => {
+    try {
+      const endpoint = filterDate
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/attendance/filter`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/attendance/all`;
 
-    const res = await axios.get(endpoint, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      params: filterDate
-        ? { startDate: filterDate, endDate: filterDate }
-        : {},
-    });
+      const res = await axios.get(endpoint, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: filterDate
+          ? { startDate: filterDate, endDate: filterDate }
+          : {},
+      });
 
-    setAttendanceData(
-      Array.isArray(res.data) ? res.data : res.data.data || []
-    );
-  } catch (error) {
-    console.error("Error fetching attendance:", error);
-    toast.error("Failed to fetch attendance records");
-  }
-};
+      setAttendanceData(
+        Array.isArray(res.data) ? res.data : res.data.data || []
+      );
+    } catch (error) {
+      console.error("Error fetching attendance:", error);
+      toast.error("Failed to fetch attendance records");
+    }
+  };
 
 
   useEffect(() => {

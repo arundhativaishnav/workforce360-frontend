@@ -11,77 +11,92 @@ const ViewEmployee = () => {
     const fetchEmployee = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/employee/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/employee/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
         });
+        console.log('Fetched employee:', response.data);
 
-        if (response?.data?.employee) {
-          setEmployee(response.data.employee);
+        if (response?.data?.employeeId) {
+          setEmployee(response.data.employeeId);
         } else {
-          console.error("Unexpected response:", response.data);
+          console.error('Failed to fetch employee:', response.data.message);
         }
       } catch (error) {
-        console.error('Error fetching employee:', error.response?.data || error.message || error);
+        console.error('Error fetching employee:', error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchEmployee();
   }, [id]);
 
-  if (loading) {
-    return <div className="flex justify-center items-center h-screen text-xl font-medium">Loading...</div>;
-  }
-
-  if (!employee) {
-    return <div className="flex justify-center items-center h-screen text-xl text-red-500">Employee not found.</div>;
-  }
-
-  const profileImageSrc = employee.userId.profileImage || '/default-profile.png';
-
+  const profileImageSrc = employee?.userId?.profileImage || '/default-profile.png';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6 flex justify-center">
-      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-8 md:p-12">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          {/* ✅ Profile Image */}
-          <img
-            src={profileImageSrc}
-            alt="Profile"
-            className="w-48 h-48 rounded-full object-cover border-4 border-gray-200 shadow-md"
-          />
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : employee ? (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+          <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg p-10">
+            <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
+              Employee Details
+            </h2>
 
-          {/* Basic Info */}
-          <div className="text-center md:text-left">
-            <h2 className="text-3xl font-bold text-gray-800">{employee.userId?.name}</h2>
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
+              {/* Profile Image */}
+              <div className="flex-shrink-0">
+                <img
+                  src={profileImageSrc}
+                  alt="Profile"
+                  className="w-48 h-48 rounded-full object-cover border-4 border-gray-200 shadow-md"
+                />
+              </div>
 
-            <p className="text-gray-500">{employee.userId?.email}</p>
+              {/* Employee Information */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+                <div>
+                  <p className="text-gray-600 font-semibold">Name:</p>
+                  <p className="text-gray-800 font-medium">{employee.userId.name}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Employee ID:</p>
+                  <p className="text-gray-800 font-medium">{employee.employeeId}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Date of Birth:</p>
+                  <p className="text-gray-800 font-medium">{employee.dob?.split('T')[0]}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Gender:</p>
+                  <p className="text-gray-800 font-medium">{employee.gender}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Designation:</p>
+                  <p className="text-gray-800 font-medium">{employee.designation}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Department:</p>
+                  <p className="text-gray-800 font-medium">{employee.department.departmentName}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Email:</p>
+                  <p className="text-gray-800 font-medium">{employee.userId.email}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold">Marital Status:</p>
+                  <p className="text-gray-800 font-medium">{employee.maritalStatus}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-          {[
-            { label: "Employee ID", value: employee.employeeId },
-            { label: "Department", value: employee.department?.departmentName },
-            { label: "Date of Birth", value: employee.dob?.split("T")[0] },
-            { label: "Gender", value: employee.gender },
-            { label: "Marital Status", value: employee.maritalStatus },
-            { label: "Salary", value: `₹ ${employee.salary}` },
-            { label: "Role", value: employee.designation },
-            { label: "Joining Date", value: employee.createdAt?.split("T")[0] },
-            
-          ].map((item, idx) => (
-            <div key={idx}>
-              <p className="text-gray-600 font-semibold">{item.label}:</p>
-              <p className="text-gray-800">{item.value || "N/A"}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+      ) : (
+        <div>Error loading employee data.</div>
+      )}
+    </>
   );
 };
 

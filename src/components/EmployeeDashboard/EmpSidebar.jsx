@@ -18,7 +18,7 @@ const EmpSidebar = () => {
 
   const handleCheckIn = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/attendance/checkin", {}, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/attendance/checkin`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -35,7 +35,7 @@ const EmpSidebar = () => {
 
   const handleCheckOut = async () => {
     try {
-      const response = await axios.put("http://localhost:5000/api/attendance/checkout", {}, {
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/attendance/checkout`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
