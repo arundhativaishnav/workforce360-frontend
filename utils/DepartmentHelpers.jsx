@@ -30,7 +30,7 @@ const DepartmentButtons = ({ dep_id, onDepartmentDelete, fetchDepartments }) => 
         if (confirmDelete) {
             try {
                 const response = await axios.delete(
-                    `http://localhost:5000/api/department/${id}`,
+                    `${import.meta.env.VITE_API_BASE_URL}/api/department/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`

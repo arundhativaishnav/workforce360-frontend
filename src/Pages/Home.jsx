@@ -2,7 +2,7 @@ import React from "react";
 import { Users } from "lucide-react";
 
 function Home() {
-  console.log("Rendering Home Component"); // Check if this logs in the console
+  //console.log("Rendering Home Component"); // Check if this logs in the console
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-16 text-center">

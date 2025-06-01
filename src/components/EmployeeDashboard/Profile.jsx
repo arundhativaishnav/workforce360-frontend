@@ -19,8 +19,8 @@ const ViewEmployee = () => {
         console.log('Fetched employee:', response.data);
 
 
-        if (response?.data?.employeeId) {
-          setEmployee(response.data.employeeId);
+        if (response?.data?.employee) {
+          setEmployee(response.data.employee);
         } else {
           console.error('Failed to fetch employee:', response.data.message);
         }
