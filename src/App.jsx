@@ -30,80 +30,88 @@ import AdminAttendance from './components/Dashboard/AdminAttendence.jsx';
 import SendNotification from './components/Notifications/SendNotification.jsx';
 import NotificationList from './components/Notifications/NotificationList';
 
-
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Public Route */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Navbar />
-              <Home />
-            </>
-          }
+      <>
+        {/* 🔔 Toast Notification Setup */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ zIndex: 9999 }}
         />
-        <Route path="/login" element={<Login />} />
 
-        {/* ✅ Protected Admin Routes */}
-        <Route
-          path="/AdminDashboard"
-          element={
-            <PrivateRoutes>
-              <RolebasedRoutes requiredRole={['admin']} />
-            </PrivateRoutes>
-          }
-        >
-          <Route element={<AdminDashboard />}>
-            <Route index element={<AdminSummary />} />
-            <Route path="departments" element={<DepartmentList />} />
-            <Route path="add-department" element={<AddDepartment />} />
-            <Route path="edit-department/:id" element={<EditDepartment />} />
-            <Route path="employees" element={<EmployeeList />} />
-            <Route path="add-Employee" element={<AddEmployee />} />
-            <Route path="employees/:id" element={<ViewEmployee />} />
-            <Route path="employees/edit/:id" element={<EditEmployee />} />
-            <Route path="employees/salary/:id" element={<ViewSalary />} />
-            <Route path="salary/add" element={<AddSalary />} />
-            <Route path="leaves" element={< LeaveTable />}/>
-            <Route path="leaves/:id" element={<LeaveDetail/>}/>
-            <Route path="employees/leaves/:id" element={<LeaveList/>}/>
-            <Route path="settings" element={< AdminSettings/>}/>
-            <Route path="attendance" element={<AdminAttendance />} />
-            <Route path="notifications" element={<SendNotification />} />            
+        <Routes>
+          {/* Public Route */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Home />
+              </>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+
+          {/* ✅ Protected Admin Routes */}
+          <Route
+            path="/AdminDashboard"
+            element={
+              <PrivateRoutes>
+                <RolebasedRoutes requiredRole={['admin']} />
+              </PrivateRoutes>
+            }
+          >
+            <Route element={<AdminDashboard />}>
+              <Route index element={<AdminSummary />} />
+              <Route path="departments" element={<DepartmentList />} />
+              <Route path="add-department" element={<AddDepartment />} />
+              <Route path="edit-department/:id" element={<EditDepartment />} />
+              <Route path="employees" element={<EmployeeList />} />
+              <Route path="add-Employee" element={<AddEmployee />} />
+              <Route path="employees/:id" element={<ViewEmployee />} />
+              <Route path="employees/edit/:id" element={<EditEmployee />} />
+              <Route path="employees/salary/:id" element={<ViewSalary />} />
+              <Route path="salary/add" element={<AddSalary />} />
+              <Route path="leaves" element={<LeaveTable />} />
+              <Route path="leaves/:id" element={<LeaveDetail />} />
+              <Route path="employees/leaves/:id" element={<LeaveList />} />
+              <Route path="settings" element={<AdminSettings />} />
+              <Route path="attendance" element={<AdminAttendance />} />
+              <Route path="notifications" element={<SendNotification />} />
             </Route>
-        </Route>
+          </Route>
 
-        {/* ✅ Protected Employee Routes */}
-        <Route
-          path="/EmployeeDashboard"
-          element={
-            <PrivateRoutes>
-              <RolebasedRoutes requiredRole={['Employee']} />
-            </PrivateRoutes>
-          }
-        >
-            <Route element={<EmployeeDashboard/>}>
-            <Route index element={<SummaryCard />} />
-            <Route path="profile/:id" element={<ViewEmployee />} />
-            <Route path="leaves/:id" element={<LeaveList/>}/>
-            <Route path="add-Leave" element={<AddLeave/>}/>
-            <Route path="salary/:id" element={<ViewSalary/>}/>
-            <Route path="settings" element={< Setting/>}/>
-            <Route path="notifications" element={<NotificationList />} />
-            
-
-            
-
-
+          {/* ✅ Protected Employee Routes */}
+          <Route
+            path="/EmployeeDashboard"
+            element={
+              <PrivateRoutes>
+                <RolebasedRoutes requiredRole={['Employee']} />
+              </PrivateRoutes>
+            }
+          >
+            <Route element={<EmployeeDashboard />}>
+              <Route index element={<SummaryCard />} />
+              <Route path="profile/:id" element={<ViewEmployee />} />
+              <Route path="leaves/:id" element={<LeaveList />} />
+              <Route path="add-Leave" element={<AddLeave />} />
+              <Route path="salary/:id" element={<ViewSalary />} />
+              <Route path="settings" element={<Setting />} />
+              <Route path="notifications" element={<NotificationList />} />
             </Route>
-          
-        </Route>
-      </Routes>
-
-      <ToastContainer />
+          </Route>
+        </Routes>
+      </>
     </Router>
   );
 }
