@@ -44,7 +44,7 @@ export const columns = [
   export const fetchDepartments = async () => {
     let departments 
     try {
-        const response = await axios.get('http://localhost:5000/api/department/department', {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/department/department`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
@@ -63,7 +63,7 @@ export const columns = [
 //employees for salary department 
  export const fetchEmployees = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/employee/department/${id}`, {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/employee/department/${id}`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -87,7 +87,7 @@ const EmployeeButtons = ({ Id, onDeleteSuccess }) => {
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this employee? This action cannot be undone.")) {
             try {
-                await axios.delete(`http://localhost:5000/api/employee/${Id}`, {
+                await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/employee/${Id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
